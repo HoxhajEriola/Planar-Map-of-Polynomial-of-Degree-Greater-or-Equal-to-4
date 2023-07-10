@@ -29,19 +29,12 @@ needsPackage "Elimination"
 needsPackage "FastMinors"
 needsPackage "RationalMaps"
 
---------------------------------------------------------------------------------
-
-
 k=ZZ/32003;
 P2=k[s,t,u];  
 RC=k[y,z,w];
 RDC=k[s,t,u,y,z,w];
 
-
 --------------------------------------------------------------------------------
-
-
-
 
 
 AdIdeal = (B) -> (
@@ -67,21 +60,19 @@ AdIdeal = (B) -> (
 --------------------------------------------------------------------------------
 
 
---time B=AdIdeal(B);  
+--time B=AdIdeal(B);  --used 200.621 seconds 
 
 
 --------------------------------------------------------------------------------
 
 
-
 LNormalize = (B) -> (
+
 --INPUT: the definig polynomial of a planar curve B which has nodes and cusps 
 --as singularities such that the degree can be factored as 3d(d-1).
 --First find the adjoint ideal and pick a form of degree less then deg(B)
 --then compute the quotient ideal as in the Theorem in the paper.
 --OUTPUT: map finding the linear normalization
-
-
 
   A := AdIdeal(B);  
   denom := A_0;
@@ -89,33 +80,30 @@ LNormalize = (B) -> (
   Q1:=ideal(B,denom);
   Q := Q1:A ;      
   L1:={Q_0};
+ 
   for i from 0 to (numgens Q)-1 do (
     if first degree Q_i  == l+1 then
       L1 = append(L1,Q_i) 
   );
+
   L2:=drop(L1,1);
   g:={Q_0};
   L:= join (y*g,z*g,w*g,L2);
   
-  
-  QR = RC/ideal(B1);
+  QR = RC/ideal(B);
  
   Rbig = k[x_0..x_(#L-1)]; 
   psi:=map(QR,Rbig,L);
   psi
 )
 
-
-
 ---------------------------------------------------------------------------------------------------------------------
 
 
---time LNormalize (B1);
+--time LNormalize (B);   --used 220.6 seconds
 
 
 --------------------------------------------------------------------------------------------------------------------
-
-
 
 DegPolMp =(B) ->(
 
@@ -133,15 +121,13 @@ DegPolMp =(B) ->(
     d
 )    
 
-
 --------------------------------------------------------------------------------
 
 
-time DegPolMp(B) 
+--time DegPolMp(B)  --used 0.0004 seconds
 
 
 --------------------------------------------------------------------------------
-
 
 
 Veronese=(B)->(
@@ -177,21 +163,16 @@ Veronese=(B)->(
 
     A:=substitute(gens ker M,Rbig);
     V:=ideal((gens I)*A);
-    
     V
 )      
     
-    
-                            
 --------------------------------------------------------------------------------
 
 
---time Veronese (B)  
+--time Veronese (B)    --used 228.769 seconds
 
 
 --------------------------------------------------------------------------------
-
-
 
 
 PointVeronese=(B)->(
@@ -202,7 +183,6 @@ PointVeronese=(B)->(
 --surface with a linear space. 
 --OUTPUT: the maximal ideal of one point in Veronese surface
     
-
     V:= Veronese(B);
 
     found=false;
@@ -222,22 +202,17 @@ PointVeronese=(B)->(
    
    if degree(Pr_0)==1 then found=true);
    M:=Pr_0+J ;
-   
    M
 )
  
-   
 --------------------------------------------------------------------------------
 
 
---time P= PointVeronese(B)      
+--time P= PointVeronese(B)      --used 233.461 
   
   
 --------------------------------------------------------------------------------   
    
-
-
-
 
 OsculatingSpaces = (B) ->(
 
@@ -247,52 +222,40 @@ OsculatingSpaces = (B) ->(
 --then we compute 2nd &3rd osculating spaces on that point. 
 --OUTPUT: the definig ideal of 2nd & 3rd osculating spaces
 
-
-
       V:=Veronese(B);
       M:=PointVeronese(B);
       Vn:=sub(V,Rbig);
       
       E:=(entries vars Rbig)#0;
       
-      
      Vaff:=ideal gens gb sub(Vn,{E_(#E-1)=>1});                
      Maff:=ideal gens gb sub (M,{E_(#E-1)=>1});
-     
      
      t:=DegPolMp(B1);
      t1:=t-1;
      Osc1:=ideal gens gb (Maff^t+Vaff);    
      Osc2:=ideal gens gb (Maff^t1+Vaff);           
 
-    --OSC1:= ideal gens gb Osc1;
     Lst1:=for i from 0 to (numgens(Osc1)-1) list  Osc1_i;
     L1:=select(Lst1, a ->degree a == {1}); 
-    
     
     Lst2:=for i from 0 to (numgens(Osc2)-1) list  Osc2_i;
     L2:=select(Lst2, b ->degree b == {1}); 
     
-    
     V1:= ideal L1;
     V2:= ideal L2;
     
-    V1,V2
+   V1,V2
     
     )
     
-                    
- 
 --------------------------------------------------------------------------------
 
 
---time OsculatingSpaces(B1)   
+--time OsculatingSpaces(B1)    --458.746 seconds
 
 
 --------------------------------------------------------------------------------
-
-
-
 
 ParametrizationVeronese=(B) -> (
 
@@ -307,7 +270,6 @@ ParametrizationVeronese=(B) -> (
 --to the plane, and then find its inverse which is exactly the parametrization.
 --OUTPUT: the parametrization of the Veronese surface.
 
-      
       (V3,V4):=OsculatingSpaces(B);
       (V5,V6):=OsculatingSpaces(B);
     
@@ -324,12 +286,10 @@ ParametrizationVeronese=(B) -> (
       C1:= for i from 0 to numgens(i2)-1 list i2_i;
       C:=select(C1,g-> degree g=={1});
      
-
       I1:=ideal A;
       I2:=ideal C;
       
       I:=trim(I1+I2);
-      
       
       L:=(entries vars Rbig)#0;
        
@@ -350,16 +310,9 @@ ParametrizationVeronese=(B) -> (
       
 --------------------------------------------------------------------------------
 
-
-
 --time ParametrizationVeronese(B) --1198 sec
 
-
-
---------------------------------------------------------------------------------
-
-
-
+-------------------------------------------------------------------------------
 
 PlanarMap=(B)->(
 
@@ -371,9 +324,6 @@ PlanarMap=(B)->(
 --projection to a plane. 
 
 --OUTPUT: a planar map such that the curve B is ist branching curve.    
-       
-       
-       
        
        Par:=ParametrizationVeronese(B);
        Parm:=matrix map Par;
@@ -393,11 +343,5 @@ PlanarMap=(B)->(
 --------------------------------------------------------------------------------
 
 
-
 time PlanarMap(B) --1163 sec
-
-
-
-
-
 
