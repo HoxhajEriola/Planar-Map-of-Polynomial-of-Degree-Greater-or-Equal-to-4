@@ -38,8 +38,8 @@ RDC=k[s,t,u,y,z,w];
 
 
 AdIdeal = (B) -> (
---INPUT: the definig polynomial of a planar curve B which nodes and cusps 
---as singularities such that the degree can be factored as 3d(d-1).
+--INPUT: the definig polynomial of a planar curve B whose singularities are nodes or cusps 
+-- and the degree can be factored as 3d(d-1).
 --OUTPUT: the  adjoint ideal which is equal to the ideal of  the singular locus
 --(jacobian ideal)
 
@@ -68,8 +68,8 @@ AdIdeal = (B) -> (
 
 LNormalize = (B) -> (
 
---INPUT: the definig polynomial of a planar curve B which has nodes and cusps 
---as singularities such that the degree can be factored as 3d(d-1).
+--INPUT: the definig polynomial of a planar curve B whose singularities are nodes or cusps 
+-- and the degree can be factored as 3d(d-1).
 --First find the adjoint ideal and pick a form of degree less then deg(B)
 --then compute the quotient ideal as in the Theorem in the paper.
 --OUTPUT: map finding the linear normalization
@@ -107,8 +107,8 @@ LNormalize = (B) -> (
 
 DegPolMp =(B) ->(
 
---INPUT: the defining polynomial of the planar curve which has  only nodes and cusps 
--- as singularities, and the degree of B can be factored as 3d(d-1).
+--INPUT: the definig polynomial of a planar curve B whose singularities are nodes or cusps 
+-- and the degree can be factored as 3d(d-1).
 --Express d depending on the degree of B and see the condition that 
 --it should fulfill.
 --OUTPUT: d the degree of polnomials that will define the planar map
@@ -132,8 +132,8 @@ DegPolMp =(B) ->(
 
 Veronese=(B)->(
 
---INPUT: the definig polynomial of a planar curve B with nodes and cusps 
---as singularities and the degree can be factored as 3d(d-1).
+---INPUT: the definig polynomial of a planar curve B whose singularities are nodes or cusps 
+-- and the degree can be factored as 3d(d-1).
 --First we find the linear normalization of the curve B, B~ denoted imB
 --then we take all the quadratic forms in the ideal of linear normalization.
 --OUTPUT: the defining ideal of the Veronese surface having only quadratic forms.
@@ -177,8 +177,8 @@ Veronese=(B)->(
 
 PointVeronese=(B)->(
 
---INPUT:the definig polynomial of a planar curve B which nodes and cusps 
---as singularities such that the degree can be factored as 3d(d-1).
+--INPUT: the definig polynomial of a planar curve B whose singularities are nodes or cusps 
+-- and the degree can be factored as 3d(d-1).
 --First we compute the defining ideal of the Veronese surface, then we cut the
 --surface with a linear space. 
 --OUTPUT: the maximal ideal of one point in Veronese surface
@@ -216,8 +216,8 @@ PointVeronese=(B)->(
 
 OsculatingSpaces = (B) ->(
 
---INPUT: the definig polynomial of a planar curve B which has nodes and cusps 
---as singularities such that the degree can be factored as 3d(d-1).
+--INPUT: the definig polynomial of a planar curve B whose singularities are nodes or cusps 
+-- and the degree can be factored as 3d(d-1).
 --We compute a Veronese surface and a point on it, 
 --then we compute 2nd &3rd osculating spaces on that point. 
 --OUTPUT: the definig ideal of 2nd & 3rd osculating spaces
@@ -259,8 +259,8 @@ OsculatingSpaces = (B) ->(
 
 ParametrizationVeronese=(B) -> (
 
---INPUT: the definig polynomial of a planar curve B with nodes and cusps 
---as singularities such that the degree can be factored as 3d(d-1).
+--INPUT: the definig polynomial of a planar curve B whose singularities are nodes or cusps 
+-- and the degree can be factored as 3d(d-1).
 --First we apply twice the function for finding the 2nd & 3rd osculating space
 --at the Veronese surface containing the linear normalization of the curve B.
 --Next we intersect the osculating spaces of different points with different
@@ -316,8 +316,8 @@ ParametrizationVeronese=(B) -> (
 
 PlanarMap=(B)->(
 
-   --INPUT: defining polynomial of a planar curve B with nodes and cusps 
---as singularities such that the degree can be factored as 3d(d-1)
+--INPUT: the definig polynomial of a planar curve B whose singularities are nodes or cusps 
+-- and the degree can be factored as 3d(d-1).
 --The first step is finding the parametrization of the Veronese surface
 --where the linear normalization of the curve B lies.
 --The next step is to compose this parametrization with a random
